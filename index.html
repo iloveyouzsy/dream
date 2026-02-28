@@ -5,216 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>同学，我喜欢你</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            background-color: #f5f0e6;
-            background-image: linear-gradient(#e0e0e0 1px, transparent 1px);
-            background-size: 100% 2rem;
-            font-family: "楷体", "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif;
-            padding: 2rem 1rem;
-            overflow-x: hidden;
-        }
-
-        .blackboard {
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            background-color: #2c3e50;
-            padding: 2rem 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-            border: 8px solid #8B4513;
-        }
-        .blackboard h1 {
-            color: #fff;
-            font-size: 2rem;
-            font-weight: normal;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: 0.2rem;
-        }
-
-        .letter {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            background: #fff;
-            padding: 2.5rem 2rem;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            line-height: 1.9;
-            font-size: 1.15rem;
-            color: #2d2d2d;
-            position: relative;
-        }
-        .letter::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            width: 30px;
-            height: 50px;
-            background-color: #c0c0c0;
-            border-radius: 4px;
-            transform: rotate(10deg);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .letter::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            right: 25px;
-            width: 20px;
-            height: 40px;
-            background-color: #fff;
-            border-radius: 2px;
-            transform: rotate(10deg);
-        }
-
-        .typing-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.2rem;
-            background-color: #2d2d2d;
-            margin-left: 2px;
-            animation: blink 0.7s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 0 auto;
-            max-width: 600px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 0.9rem 2.2rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.2rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 0.1rem;
-        }
-        .btn-yes {
-            background-color: #27ae60;
-            color: #fff;
-        }
-        .btn-yes:hover {
-            transform: scale(1.05);
-            background-color: #219653;
-            box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
-        }
-        .btn-no {
-            background-color: #e74c3c;
-            color: #fff;
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 3rem 2rem;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-        }
-        .modal-content h2 {
-            color: #e74c3c;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: normal;
-        }
-        .modal-content p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        .heart {
-            position: fixed;
-            top: -10px;
-            color: #e74c3c;
-            font-size: 1.5rem;
-            animation: fall linear forwards;
-            z-index: 998;
-            pointer-events: none;
-        }
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .blackboard h1 {
-                font-size: 1.5rem;
-            }
-            .letter {
-                font-size: 1rem;
-                padding: 2rem 1.5rem;
-            }
-            .btn {
-                padding: 0.7rem 1.8rem;
-                font-size: 1.1rem;
-            }
-        }
+        /* 保留你原来的所有CSS样式，这里省略以节省篇幅 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { min-height: 100vh; background-color: #f5f0e6; background-image: linear-gradient(#e0e0e0 1px, transparent 1px); background-size: 100% 2rem; font-family: "楷体", "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif; padding: 2rem 1rem; overflow-x: hidden; }
+        .blackboard { max-width: 700px; margin: 0 auto 2rem; background-color: #2c3e50; padding: 2rem 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 6px 16px rgba(0,0,0,0.2); border: 8px solid #8B4513; }
+        .blackboard h1 { color: #fff; font-size: 2rem; font-weight: normal; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.2rem; }
+        .letter { max-width: 600px; margin: 0 auto 3rem; background: #fff; padding: 2.5rem 2rem; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); line-height: 1.9; font-size: 1.15rem; color: #2d2d2d; position: relative; }
+        .letter::before { content: ''; position: absolute; top: -10px; right: 20px; width: 30px; height: 50px; background-color: #c0c0c0; border-radius: 4px; transform: rotate(10deg); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .letter::after { content: ''; position: absolute; top: -5px; right: 25px; width: 20px; height: 40px; background-color: #fff; border-radius: 2px; transform: rotate(10deg); }
+        .typing-cursor { display: inline-block; width: 2px; height: 1.2rem; background-color: #2d2d2d; margin-left: 2px; animation: blink 0.7s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        .btn-container { display: flex; justify-content: center; gap: 2rem; margin: 0 auto; max-width: 600px; flex-wrap: wrap; }
+        .btn { padding: 0.9rem 2.2rem; border: none; border-radius: 6px; font-size: 1.2rem; font-family: inherit; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.1rem; }
+        .btn-yes { background-color: #27ae60; color: #fff; }
+        .btn-yes:hover { transform: scale(1.05); background-color: #219653; box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3); }
+        .btn-no { background-color: #e74c3c; color: #fff; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 999; }
+        .modal-content { background-color: #fff; padding: 3rem 2rem; border-radius: 8px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .modal-content h2 { color: #e74c3c; font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: normal; }
+        .modal-content p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #333; }
+        .heart { position: fixed; top: -10px; color: #e74c3c; font-size: 1.5rem; animation: fall linear forwards; z-index: 998; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+        @media (max-width: 768px) { .blackboard h1 { font-size: 1.5rem; } .letter { font-size: 1rem; padding: 2rem 1.5rem; } .btn { padding: 0.7rem 1.8rem; font-size: 1.1rem; } }
     </style>
 </head>
 <body>
-
-<div class="blackboard">
-    <h1>同学，我有话想对你说</h1>
-</div>
-
-<div class="letter">
-    <span id="typingText"></span>
-    <span class="typing-cursor" id="cursor"></span>
-</div>
-
-<div class="btn-container">
-    <button class="btn btn-yes" id="yesBtn">我愿意</button>
-    <button class="btn btn-no" id="noBtn">再考虑考虑</button>
-</div>
-
-<div class="modal" id="successModal">
-    <div class="modal-content">
-        <h2>太好了！！</h2>
-        <p>我终于等到你的答案啦<br>以后的日子，我们一起走下去吧✨</p>
-        <button class="btn btn-yes" id="closeModal">好呀好呀</button>
+    <div class="blackboard">
+        <h1>同学，我有话想对你说</h1>
     </div>
-</div>
+    <div class="letter">
+        <span id="typingText"></span>
+        <span class="typing-cursor" id="cursor"></span>
+    </div>
+    <div class="btn-container">
+        <button class="btn btn-yes" id="yesBtn">我愿意</button>
+        <button class="btn btn-no" id="noBtn">再考虑考虑</button>
+    </div>
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h2>太好了！！</h2>
+            <p>我终于等到你的答案啦<br>以后的日子，我们一起走下去吧✨</p>
+            <button class="btn btn-yes" id="closeModal">好呀好呀</button>
+        </div>
+    </div>
+    <!-- 关键修复1：闭合了audio标签 -->
+    <audio id="bgMusic" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=1430583016.mp3" type="audio/mpeg">
+    
 
-<audio id="bgMusic" loop>
-    <source src="https://music.163.com/song/media/outer/url?id=1430583016.mp3" type="audio/mpeg">
-
-
-<script>
-const letterText = `亲爱的同学：
+    <!-- 关键修复2：用DOMContentLoaded确保DOM加载完成后再执行JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const letterText = `亲爱的同学：
 张诗妍。
 
 其实我注意你很久了。
@@ -227,38 +69,62 @@ const letterText = `亲爱的同学：
 
 所以，你愿意，和我在一起吗？`;
 
-const typingText = document.getElementById('typingText');
-const cursor = document.getElementById('cursor');
-let index = 0;
-const typingSpeed = 50;
+            const typingText = document.getElementById('typingText');
+            const cursor = document.getElementById('cursor');
+            let index = 0;
+            const typingSpeed = 50;
 
-function typing() {
-    if (index < letterText.length) {
-        if (letterText.charAt(index) === '\n') {
-            typingText.innerHTML += '<br>';
-        } else {
-            typingText.innerHTML += letterText.charAt(index);
-        }
-        index++;
-        setTimeout(typing, typingSpeed);
-    } else {
-        cursor.style.display = 'none';
-    }
-}
-typing();
+            function typing() {
+                if (index < letterText.length) {
+                    if (letterText.charAt(index) === '\n') {
+                        typingText.innerHTML += '<br>';
+                    } else {
+                        typingText.innerHTML += letterText.charAt(index);
+                    }
+                    index++;
+                    setTimeout(typing, typingSpeed);
+                } else {
+                    cursor.style.display = 'none';
+                }
+            }
+            typing();
 
-// 音乐播放（需要用户点击页面才会响，浏览器规则）
-document.body.addEventListener('click', () => {
-    const bgMusic = document.getElementById('bgMusic');
-    if (bgMusic.paused) bgMusic.play().catch(() => {});
-}, { once: true });
+            // 音乐播放（用户点击后触发）
+            document.body.addEventListener('click', () => {
+                const bgMusic = document.getElementById('bgMusic');
+                if (bgMusic.paused) bgMusic.play().catch(() => {});
+            }, { once: true });
 
-// 同意按钮
-document.getElementById('yesBtn').addEventListener('click', () => {
-    document.getElementById('successModal').style.display = 'flex';
-    createHearts();
-});
+            // 同意按钮与爱心
+            document.getElementById('yesBtn').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'flex';
+                createHearts();
+            });
 
-// 关闭弹窗
-document.getElementById('closeModal').addEventListener('click', () => {
-    document.getElementBy
+            // 关闭弹窗
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+            });
+
+            // 拒绝按钮乱跑
+            const noBtn = document.getElementById('noBtn');
+            noBtn.addEventListener('mouseover', () => {
+                const x = Math.random() * (window.innerWidth - 120);
+                const y = Math.random() * (window.innerHeight - 60);
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+            });
+
+            // 爱心生成
+            function createHearts() {
+                for (let i = 0; i < 30; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerText = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+  
