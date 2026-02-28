@@ -11,7 +11,6 @@
             box-sizing: border-box;
         }
 
-        /* 整体页面：作业本背景风格 */
         body {
             min-height: 100vh;
             background-color: #f5f0e6;
@@ -22,7 +21,6 @@
             overflow-x: hidden;
         }
 
-        /* 黑板标题区 */
         .blackboard {
             max-width: 700px;
             margin: 0 auto 2rem;
@@ -41,7 +39,6 @@
             letter-spacing: 0.2rem;
         }
 
-        /* 表白信容器 */
         .letter {
             max-width: 600px;
             margin: 0 auto 3rem;
@@ -54,7 +51,6 @@
             color: #2d2d2d;
             position: relative;
         }
-        /* 回形针装饰 */
         .letter::before {
             content: '';
             position: absolute;
@@ -79,7 +75,6 @@
             transform: rotate(10deg);
         }
 
-        /* 打字机光标 */
         .typing-cursor {
             display: inline-block;
             width: 2px;
@@ -93,7 +88,6 @@
             50% { opacity: 0; }
         }
 
-        /* 按钮区域 */
         .btn-container {
             display: flex;
             justify-content: center;
@@ -112,7 +106,6 @@
             transition: all 0.3s ease;
             letter-spacing: 0.1rem;
         }
-        /* 同意按钮 */
         .btn-yes {
             background-color: #27ae60;
             color: #fff;
@@ -122,14 +115,11 @@
             background-color: #219653;
             box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
         }
-        /* 拒绝按钮 */
         .btn-no {
             background-color: #e74c3c;
             color: #fff;
-            position: relative;
         }
 
-        /* 成功弹窗 */
         .modal {
             position: fixed;
             top: 0;
@@ -164,7 +154,6 @@
             color: #333;
         }
 
-        /* 爱心飘落动画 */
         .heart {
             position: fixed;
             top: -10px;
@@ -181,7 +170,6 @@
             }
         }
 
-        /* 手机端适配 */
         @media (max-width: 768px) {
             .blackboard h1 {
                 font-size: 1.5rem;
@@ -198,40 +186,35 @@
     </style>
 </head>
 <body>
-    <!-- 黑板标题 -->
-    <div class="blackboard">
-        <h1>同学，我有话想对你说</h1>
+
+<div class="blackboard">
+    <h1>同学，我有话想对你说</h1>
+</div>
+
+<div class="letter">
+    <span id="typingText"></span>
+    <span class="typing-cursor" id="cursor"></span>
+</div>
+
+<div class="btn-container">
+    <button class="btn btn-yes" id="yesBtn">我愿意</button>
+    <button class="btn btn-no" id="noBtn">再考虑考虑</button>
+</div>
+
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <h2>太好了！！</h2>
+        <p>我终于等到你的答案啦<br>以后的日子，我们一起走下去吧✨</p>
+        <button class="btn btn-yes" id="closeModal">好呀好呀</button>
     </div>
+</div>
 
-    <!-- 表白信内容 -->
-    <div class="letter">
-        <span id="typingText"></span>
-        <span class="typing-cursor" id="cursor"></span>
-    </div>
+<audio id="bgMusic" loop>
+    <source src="https://music.163.com/song/media/outer/url?id=1430583016.mp3" type="audio/mpeg">
 
-    <!-- 互动按钮 -->
-    <div class="btn-container">
-        <button class="btn btn-yes" id="yesBtn">我愿意</button>
-        <button class="btn btn-no" id="noBtn">再考虑考虑</button>
-    </div>
 
-    <!-- 同意后的弹窗 -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <h2>太好了！！</h2>
-            <p>我终于等到你的答案啦<br>以后的日子，我们一起走下去吧✨</p>
-            <button class="btn btn-yes" id="closeModal">好呀好呀</button>
-        </div>
-    </div>
-
-    <!-- 背景音乐（可替换） -->
-    <audio id="bgMusic" loop>
-        <source src="https://music.163.com/song/media/outer/url?id=1430583016.mp3" type="audio/mpeg">
-    
-
-    <script>
-        // ========== 核心自定义区域：修改这里的表白文案 ==========
-        const letterText = `亲爱的同学：
+<script>
+const letterText = `亲爱的同学：
 张诗妍。
 
 其实我注意你很久了。
@@ -244,16 +227,38 @@
 
 所以，你愿意，和我在一起吗？`;
 
-        // 打字机效果
-        const typingText = document.getElementById('typingText');
-        const cursor = document.getElementById('cursor');
-        let index = 0;
-        const typingSpeed = 50; // 打字速度，数字越小越快
+const typingText = document.getElementById('typingText');
+const cursor = document.getElementById('cursor');
+let index = 0;
+const typingSpeed = 50;
 
-        function typing() {
-            if (index < letterText.length) {
-                if (letterText.charAt(index) === '\n') {
-                    typingText.innerHTML += '<br>';
-                } else {
-                    typingText.innerHTML += letterText.charAt(index);
-         
+function typing() {
+    if (index < letterText.length) {
+        if (letterText.charAt(index) === '\n') {
+            typingText.innerHTML += '<br>';
+        } else {
+            typingText.innerHTML += letterText.charAt(index);
+        }
+        index++;
+        setTimeout(typing, typingSpeed);
+    } else {
+        cursor.style.display = 'none';
+    }
+}
+typing();
+
+// 音乐播放（需要用户点击页面才会响，浏览器规则）
+document.body.addEventListener('click', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    if (bgMusic.paused) bgMusic.play().catch(() => {});
+}, { once: true });
+
+// 同意按钮
+document.getElementById('yesBtn').addEventListener('click', () => {
+    document.getElementById('successModal').style.display = 'flex';
+    createHearts();
+});
+
+// 关闭弹窗
+document.getElementById('closeModal').addEventListener('click', () => {
+    document.getElementBy
