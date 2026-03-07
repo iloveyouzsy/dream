@@ -70,22 +70,36 @@
             type();
         }, { once: true });
 
-        // 愿意
+        // 点愿意后，记录时间 + 答案
         document.getElementById("yesBtn").onclick = function() {
             localStorage.setItem("she_answer", "yes");
+            localStorage.setItem("answer_time", Date.now());
             document.getElementById("successModal").style.display = "flex";
             createHearts();
         };
 
-        // 再考虑考虑
         document.getElementById("noBtn").onclick = function() {
             localStorage.setItem("she_answer", "no");
+            localStorage.setItem("answer_time", Date.now());
             alert("没关系，我等你。");
         };
 
         document.getElementById("closeModal").onclick = function() {
             document.getElementById("successModal").style.display = "none";
         };
+
+        // 10分钟自动清空结果（你要的功能）
+        function autoClearAfter10Min() {
+            const ans = localStorage.getItem("she_answer");
+            const t = localStorage.getItem("answer_time");
+            if (ans && t) {
+               if (Date.now() - t > 600000) { // 10分钟
+                    localStorage.removeItem("she_answer");
+                    localStorage.removeItem("answer_time");
+                }
+            }
+        }
+        autoClearAfter10Min();
 
         // 爱心特效
         function createHearts() {
