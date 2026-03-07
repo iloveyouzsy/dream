@@ -184,6 +184,7 @@ function createHearts() {
   }
 }
 
+// 已填入你的腾讯问卷：https://wj.qq.com/s2/25894588/cfaf/
 async function send(ans) {
   btns.style.display = 'none';
   tip.style.display = 'block';
@@ -200,13 +201,10 @@ async function send(ans) {
   }
 
   try {
-    await fetch("https://api.submit-form.com/submit/love-result-123", {
+    await fetch(`https://wj.qq.com/s2/25894588/cfaf/`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        answer: ans,
-        time: new Date().toLocaleString()
-      })
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "result=" + encodeURIComponent(ans)
     });
   } catch (e) {}
 }
