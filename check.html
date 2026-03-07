@@ -58,3 +58,63 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表白结果查看</title>
+    <style>
+        body{
+            background:#f9f9f9;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            font-family:Microsoft YaHei;
+            font-size:22px;
+            color:#333;
+            flex-direction:column;
+            gap:20px;
+        }
+        .yes{
+            color:#e91e63;
+            font-weight:bold;
+            font-size:30px;
+        }
+        .no{
+            color:#666;
+        }
+        .tip{
+            font-size:16px;
+            color:#999;
+        }
+    </style>
+</head>
+<body>
+    <div id="result"></div>
+    <div class="tip">刷新页面即可更新结果</div>
+
+    <script>
+        // 进来先自动清一次过期数据
+        const t = localStorage.getItem("answer_time");
+        if (t) {
+           if (Date.now() - t > 600000) {
+                localStorage.removeItem("she_answer");
+                localStorage.removeItem("answer_time");
+            }
+        }
+
+        const ans = localStorage.getItem("she_answer");
+        const r = document.getElementById("result");
+
+        if(ans === "yes"){
+            r.innerHTML = "<div class='yes'>✅ 她已经答应你了！</div>";
+        }else if(ans === "no"){
+            r.innerHTML = "<div class='no'>⏳ 她还在考虑</div>";
+        }else{
+            r.innerHTML = "⌛ 她还没有做出选择";
+        }
+    </script>
+</body>
+</html>
