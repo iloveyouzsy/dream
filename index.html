@@ -170,22 +170,38 @@ function createHearts() {
   const count = 20;
   for (let i = 0; i < count; i++) {
     setTimeout(() => {
-      const h = document.createElement('div');
-      h.className = 'heart';
-      h.textContent = '❤️';
-      h.style.color = colors[Math.floor(Math.random() * colors.length)];
-      h.style.fontSize = (Math.random() * 8 + 14) + 'px';
-      h.style.left = Math.random() * window.innerWidth + 'px';
-      h.style.bottom = '0';
+      const h=document.createElement('div');
+      h.className='heart';
+      h.style.color=colors[Math.floor(Math.random()*colors.length)];
+      h.textContent='❤️';
+      h.style.fontSize=(Math.random()*10+15)+'px';
+      const startX = Math.random()*window.innerWidth;
+      h.style.left=startX+'px';
+      h.style.bottom='0';
       h.style.setProperty('--sway', (Math.random() - 0.5) * 60);
       document.body.appendChild(h);
-      setTimeout(() => h.remove(), 10000);
+
+      let startTime=null;
+      function anim(t){
+        if(!startTime)startTime=t;
+        const p=(t-startTime)/(4000+Math.random()*2000);
+        if(p<1){
+          const y = -window.innerHeight*p-200;
+          const x = Math.sin(p*Math.PI*3)*30;
+          h.style.transform=`translate3d(${x}px, ${y}px, 0)`;
+          h.style.opacity=1-p;
+          requestAnimationFrame(anim);
+        }else{
+          h.remove();
+        }
+      }
+      requestAnimationFrame(anim);
     }, i * 250);
   }
 }
 
-// 已填入你的腾讯问卷：https://wj.qq.com/s2/25894588/cfaf/
-async function send(ans) {
+// 改为直接跳转，让她在腾讯问卷页面手动提交，确保数据有效
+function send(ans) {
   btns.style.display = 'none';
   tip.style.display = 'block';
 
@@ -200,13 +216,10 @@ async function send(ans) {
     tip.style.background = "#f8f9fa";
   }
 
-  try {
-    await fetch(`https://wj.qq.com/s2/25894588/cfaf/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "result=" + encodeURIComponent(ans)
-    });
-  } catch (e) {}
+  // 延迟1秒后跳转，让她先看到浪漫的反馈
+  setTimeout(() => {
+    window.location.href = `https://wj.qq.com/s2/25894588/cfaf/?result=${encodeURIComponent(ans)}`;
+  }, 1000);
 }
 
 yesBtn.onclick = () => send("愿意 和你在一起");
