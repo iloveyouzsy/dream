@@ -3,48 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>表白结果查看</title>
+    <title>同学，我喜欢你</title>
     <style>
-        body{
-            background:#f9f9f9;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-            font-family:Microsoft YaHei;
-            font-size:22px;
-            color:#333;
-            flex-direction:column;
-            gap:20px;
-        }
-        .yes{
-            color:#e91e63;
-            font-weight:bold;
-            font-size:30px;
-        }
-        .no{
-            color:#666;
-        }
-        .tip{
-            font-size:16px;
-            color:#999;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { min-height: 100vh; background-color: #f5f0e6; background-image: linear-gradient(#e0e0e0 1px, transparent 1px); background-size: 100% 2rem; font-family: "楷体", "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif; padding: 2rem 1rem; overflow-x: hidden; }
+        .blackboard { max-width: 700px; margin: 0 auto 2rem; background-color: #2c3e50; padding: 2rem 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 6px 16px rgba(0,0,0,0.2); border: 8px solid #8B4513; }
+        .blackboard h1 { color: #fff; font-size: 2rem; font-weight: normal; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.2rem; }
+        .letter { max-width: 600px; margin: 0 auto 3rem; background: #fff; padding: 2.5rem 2rem; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); line-height: 1.9; font-size: 1.15rem; color: #2d2d2d; position: relative; }
+        .letter::before { content: ''; position: absolute; top: -10px; right: 20px; width: 30px; height: 50px; background-color: #c0c0c0; border-radius: 4px; transform: rotate(10deg); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .letter::after { content: ''; position: absolute; top: -5px; right: 25px; width: 20px; height: 40px; background-color: #fff; border-radius: 2px; transform: rotate(10deg); }
+        .typing-cursor { display: inline-block; width: 2px; height: 1.2rem; background-color: #2d2d2d; margin-left: 2px; animation: blink 0.7s infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        .btn-container { display: flex; justify-content: center; gap: 2rem; margin: 0 auto; max-width: 600px; flex-wrap: wrap; }
+        .btn { padding: 0.9rem 2.2rem; border: none; border-radius: 6px; font-size: 1.2rem; font-family: inherit; cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.1rem; }
+        .btn-yes { background-color: #27ae60; color: #fff; }
+        .btn-yes:hover { transform: scale(1.05); background-color: #219653; box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3); }
+        .btn-no { background-color: #e74c3c; color: #fff; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 999; }
+        .modal-content { background-color: #fff; padding: 3rem 2rem; border-radius: 8px; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .modal-content h2 { color: #e74c3c; font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: normal; }
+        .modal-content p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem; color: #333; }
+        .heart { position: fixed; top: -10px; color: #e74c3c; font-size: 1.5rem; animation: fall linear forwards; z-index: 998; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+        @media (max-width: 768px) { .blackboard h1 { font-size: 1.5rem; } .letter { font-size: 1rem; padding: 2rem 1.5rem; } .btn { padding: 0.7rem 1.8rem; font-size: 1.1rem; } }
     </style>
 </head>
 <body>
-    <div id="result"></div>
-    <div class="tip">刷新页面即可更新结果</div>
+    <div class="blackboard">
+        <h1>同学，我有话想对你说</h1>
+    </div>
+    <div class="letter">
+        <span id="typingText"></span>
+        <span class="typing-cursor" id="cursor"></span>
+    </div>
+    <div class="btn-container">
+        <button class="btn btn-yes" id="yesBtn">我愿意</button>
+        <button class="btn btn-no" id="noBtn">再考虑考虑</button>
+    </div>
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h2>太好了！！</h2>
+            <p>谢谢你，愿意走向我。<br>以后的日子，我会一直陪着你✨</p>
+            <button class="btn btn-yes" id="closeModal">好</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=25715233.mp3" type="audio/mpeg">
 
     <script>
-        const ans = localStorage.getItem("she_answer");
-        const r = document.getElementById("result");
+        const text = "其实我偷偷注意你很久了。\n\n不是一时兴起，也不是随便说说，是真的很喜欢。\n\n喜欢和你说话时的感觉，喜欢看见你就开心的心情，喜欢这段安安静静却又闪闪发光的时光。\n\n我不敢说我能有多完美，但我可以保证：对你认真、真诚、真心。\n\n我喜欢你，很正式、很认真地问你：\n你愿意，和我在一起吗？";
 
-        if(ans === "yes"){
-            r.innerHTML = "<div class='yes'>✅ 她已经答应你了！</div>";
-        }else if(ans === "no"){
-            r.innerHTML = "<div class='no'>⏳ 她还在考虑</div>";
-        }else{
-            r.innerHTML = "⌛ 她还没有做出选择";
+        const typingText = document.getElementById("typingText");
+        let index = 0;
+        function type() {
+            if (index < text.length) {
+                typingText.innerHTML += text.charAt(index).replace(/\n/g, '<br>');
+                index++;
+                setTimeout(type, 80);
+            }
+        }
+
+        document.addEventListener('click', function() {
+            const music = document.getElementById('bgMusic');
+            if (music.paused) music.play().catch(()=>{});
+            type();
+        }, { once: true });
+
+        // 愿意
+        document.getElementById("yesBtn").onclick = function() {
+            localStorage.setItem("she_answer", "yes");
+            document.getElementById("successModal").style.display = "flex";
+            createHearts();
+        };
+
+        // 再考虑考虑
+        document.getElementById("noBtn").onclick = function() {
+            localStorage.setItem("she_answer", "no");
+            alert("没关系，我等你。");
+        };
+
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("successModal").style.display = "none";
+        };
+
+        // 爱心特效
+        function createHearts() {
+            for(let i=0; i<30; i++) {
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerText = "❤️";
+                heart.style.left = Math.random()*100 + "vw";
+                heart.style.animationDuration = Math.random()*3+4 + "s";
+                document.body.appendChild(heart);
+                setTimeout(()=>heart.remove(),7000);
+            }
         }
     </script>
 </body>
